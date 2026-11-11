@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 @export var speed: float = 200.0
-@export var jump_velocity: float = 400.0
+@export var jump_velocity: float = 450.0
 @export var gravity: float = 1000.0
 
 @export var jump_cut_multiplier: float = 0.4
@@ -49,8 +49,9 @@ func _physics_process(delta: float) -> void:
 	# Cut
 	if Input.is_action_just_pressed("cut") and not cutting:
 		cutting = true
-
+		
 		sword_sprite.play("cut")
+		sword_sprite.flip_v = false if next_cut_right else true
 
 		var animation_name = "cut_right" if next_cut_right else "cut_left"
 		

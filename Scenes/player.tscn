@@ -266,6 +266,7 @@ animation = &"cut"
 autoplay = "idle"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=328561967]
+position_smoothing_enabled = true
 
 [connection signal="animation_finished" from="BodySprite" to="." method="_on_body_sprite_animation_finished"]
 [connection signal="animation_finished" from="SwordSprite" to="." method="_on_sword_sprite_animation_finished"]
