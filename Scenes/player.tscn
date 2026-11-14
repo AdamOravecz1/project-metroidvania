@@ -256,13 +256,13 @@ shape = SubResource("RectangleShape2D_vgqql")
 
 [node name="BodySprite" type="AnimatedSprite2D" parent="." unique_id=1912374974]
 sprite_frames = SubResource("SpriteFrames_fs7ks")
-animation = &"cut_right"
+animation = &"idle"
 autoplay = "idle"
 
 [node name="SwordSprite" type="AnimatedSprite2D" parent="." unique_id=1322592196]
 position = Vector2(26, -6)
 sprite_frames = SubResource("SpriteFrames_xuaoq")
-animation = &"cut"
+animation = &"idle"
 autoplay = "idle"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=328561967]
