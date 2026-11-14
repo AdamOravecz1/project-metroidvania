@@ -16,6 +16,8 @@ shader_parameter/cloud_strength = 0.4
 shader_parameter/star_density = 0.94
 shader_parameter/cloud_speed = 0.02
 shader_parameter/cloud_direction = Vector2(1, -0.5)
+shader_parameter/cloud_height = 0.800000038
+shader_parameter/cloud_density = 0.6610000313975
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jjvhh"]
 texture = ExtResource("2_8fgab")

@@ -11,6 +11,10 @@ uniform float star_density = 0.985;
 uniform float cloud_speed = 0.015;
 uniform vec2 cloud_direction = vec2(1.0, 0.0);
 
+// --- UNIFORMS ---
+uniform float cloud_height : hint_range(0.0, 1.0) = 0.5;    
+uniform float cloud_density : hint_range(0.0, 1.0) = 0.5;   
+
 // --- UTILITY FUNCTIONS ---
 
 float random(vec2 p) {
@@ -45,16 +49,16 @@ void fragment() {
     vec3 color = sky_color.rgb;
 
     // --- CLOUDS ---
-	vec2 cloud_uv = uv * vec2(2.0, 5.0) * cloud_scale;
-	cloud_uv += cloud_direction * TIME * cloud_speed;
+    vec2 cloud_uv = uv * vec2(2.0, 5.0) * cloud_scale;
+    cloud_uv += cloud_direction * TIME * cloud_speed;
 
     // Domain warping
     vec2 warp = vec2(
         noise(cloud_uv),
         noise(cloud_uv + vec2(5.2, 3.7))
     );
-	vec2 pixel_offset = floor(cloud_direction * TIME * cloud_speed * pixel_resolution) / pixel_resolution;
-	cloud_uv += pixel_offset;
+    vec2 pixel_offset = floor(cloud_direction * TIME * cloud_speed * pixel_resolution) / pixel_resolution;
+    cloud_uv += pixel_offset;
 
     // Fractal noise calculation
     float clouds = noise(cloud_uv) + 
@@ -63,12 +67,19 @@ void fragment() {
     clouds = (clouds / 1.75);
     clouds = floor(clouds * 16.0) / 16.0;
 
-    // Height density mask (more clouds towards the top)
-    float height_density = smoothstep(1.0, 0.0, uv.y);
-    float threshold = mix(0.68, 0.38, height_density);
+    // Normalized vertical position relative to cloud height limit
+    float h_pos = uv.y / max(cloud_height, 0.001);
 
-    float cloud_mask = smoothstep(threshold - 0.12, threshold + 0.12, clouds);
+    // Rebalanced density curve: prevents the top from instantly choking into solid clouds at medium-high density
+    float base_threshold = mix(0.9, 0.1, cloud_density);
+    float vertical_gradient = h_pos * mix(0.5, 0.15, cloud_density);
+    float threshold = base_threshold + vertical_gradient;
+
+    float cloud_mask = smoothstep(threshold - 0.15, threshold + 0.15, clouds);
     cloud_mask = floor(cloud_mask * 5.0) / 5.0; // Quantize gradient
+
+    // Hard cutoff past the cloud height limit
+    cloud_mask *= step(uv.y, cloud_height);
 
     color = mix(color, cloud_color.rgb, cloud_mask * cloud_strength);
 
