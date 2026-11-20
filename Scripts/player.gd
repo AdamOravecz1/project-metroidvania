@@ -45,6 +45,12 @@ func _physics_process(delta: float) -> void:
 	# Variable jump height
 	if Input.is_action_just_released("up") and velocity.y < 0.0:
 		velocity.y *= jump_cut_multiplier
+		
+	# Drop down
+	if Input.is_action_pressed("down"):
+		set_collision_mask_value(2, false)
+	else:
+		set_collision_mask_value(2, true)
 
 	# Cut
 	if Input.is_action_just_pressed("cut") and not cutting:

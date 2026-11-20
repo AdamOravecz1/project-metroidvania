@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://crcxes4p1b10c"]
+
+[ext_resource type="Script" uid="uid://rrluwf6f8hoe" path="res://Scripts/platform_shelf.gd" id="1_lca28"]
+[ext_resource type="Texture2D" uid="uid://2p4te8llbvk5" path="res://Sprites/PlatformShelf.png" id="2_alyjc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lca28"]
+
+[node name="PlatformShelf" type="Node2D" unique_id=1148675980]
+script = ExtResource("1_lca28")
+platform_texture = ExtResource("2_alyjc")
+
+[node name="Start" type="Sprite2D" parent="." unique_id=223378789]
+
+[node name="Middle" type="Node2D" parent="." unique_id=1224792437]
+
+[node name="End" type="Sprite2D" parent="." unique_id=645428845]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=221532973]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1081339549]
+shape = SubResource("RectangleShape2D_lca28")
+one_way_collision = true
