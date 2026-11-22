@@ -94,7 +94,7 @@ func update_platform() -> void:
 	shape.size = Vector2(platform_length, 2)
 
 	collision.shape = shape
-	collision.position = Vector2(platform_length / 2.0, 2)
+	collision.position = Vector2(platform_length / 2.0, 1)
 
 	start_sprite.visible = show_start
 	end_sprite.visible = show_end
