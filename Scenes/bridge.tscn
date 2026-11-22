@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dld1juqbkvbt" path="res://Scenes/player.tscn" id="4_w6b2q"]
 [ext_resource type="Texture2D" uid="uid://5ywl85paacxt" path="res://Sprites/BridgeTowerSpriteSheet.png" id="5_8fgab"]
 [ext_resource type="PackedScene" uid="uid://crcxes4p1b10c" path="res://Scenes/platform_shelf.tscn" id="6_048ht"]
+[ext_resource type="Texture2D" uid="uid://nakqct216wp3" path="res://Sprites/BridgeTowerFGSpriteSheet.png" id="9_f8kgq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8fgab"]
 shader = ExtResource("2_wsor3")
@@ -205,6 +206,17 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_bo1nx")
 sources/1 = SubResource("TileSetAtlasSource_048ht")
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dgpy2"]
+texture = ExtResource("9_f8kgq")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_kt5em"]
+tile_size = Vector2i(128, 128)
+sources/0 = SubResource("TileSetAtlasSource_dgpy2")
+
 [node name="Bridge" type="Node2D" unique_id=1530546142]
 script = ExtResource("1_wsor3")
 
@@ -265,4 +277,17 @@ show_start = false
 show_end = false
 
 [node name="Player" parent="." unique_id=1294912705 instance=ExtResource("4_w6b2q")]
-position = Vector2(1987, -2082)
+position = Vector2(1697, -169)
+
+[node name="FGTileMap" type="TileMapLayer" parent="." unique_id=1325428918]
+tile_map_data = PackedByteArray("AAAPAPb/AAABAAAAAAAPAPf/AAABAAAAAAAPAPj/AAABAAAAAAAPAPn/AAABAAAAAAAPAPr/AAABAAAAAAAPAPv/AAABAAAAAAAPAPz/AAABAAAAAAAPAP3/AAABAAAAAAAPAP7/AAABAAAAAAAPAP//AAABAAAAAAAPAAAAAAABAAAAAAAQAPb/AAABAAAAAAAQAPf/AAABAAAAAAAQAPj/AAABAAAAAAAQAPn/AAABAAAAAAAQAPr/AAABAAAAAAAQAPv/AAABAAAAAAAQAPz/AAABAAAAAAAQAP3/AAABAAAAAAAQAP7/AAABAAAAAAAQAP//AAABAAAAAAAQAAAAAAABAAAAAAAPAAEAAAABAAAAAAAPAAIAAAABAAAAAAAPAAMAAAABAAAAAAAPAAQAAAABAAAAAAAQAAEAAAABAAAAAAAQAAIAAAABAAAAAAAQAAMAAAABAAAAAAAQAAQAAAABAAAAAAAOAPb/AAAAAAAAAAAOAPf/AAAAAAAAAAAOAPj/AAAAAAAAAAAOAPn/AAAAAAAAAAAOAPr/AAAAAAAAAAAOAPv/AAAAAAAAAAAOAPz/AAAAAAAAAAAOAP3/AAAAAAAAAAAOAP7/AAAAAAAAAAAOAP//AAAAAAAAAAAOAAAAAAAAAAAAAAAOAAEAAAAAAAAAAAAOAAIAAAAAAAAAAAAOAAMAAAAAAAAAAAAOAAQAAAAAAAAAAAARAPb/AAACAAAAAAARAPf/AAACAAAAAAARAPj/AAACAAAAAAARAPn/AAACAAAAAAARAPr/AAACAAAAAAARAPv/AAACAAAAAAARAPz/AAACAAAAAAARAP3/AAACAAAAAAARAP7/AAACAAAAAAARAP//AAACAAAAAAARAAAAAAACAAAAAAARAAEAAAACAAAAAAARAAIAAAACAAAAAAARAAMAAAACAAAAAAARAAQAAAACAAAAAAA=")
+tile_set = SubResource("TileSet_kt5em")
+
+[node name="PlayerEnterChecker" type="Area2D" parent="FGTileMap" unique_id=1919270161]
+position = Vector2(2036, -241)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="FGTileMap/PlayerEnterChecker" unique_id=954299488]
+polygon = PackedVector2Array(-214, 881, 238, 882, 238, -1039, -215, -1039, -214, 881)
+
+[connection signal="body_entered" from="FGTileMap/PlayerEnterChecker" to="." method="_on_player_enter_checker_body_entered"]
+[connection signal="body_exited" from="FGTileMap/PlayerEnterChecker" to="." method="_on_player_enter_checker_body_exited"]
