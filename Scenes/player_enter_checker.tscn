@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://x3alfs1lb60a"]
+
+[ext_resource type="Script" uid="uid://duacqx5xa0rcg" path="res://Scripts/player_enter_checker.gd" id="1_jixxe"]
+
+[node name="PlayerEnterChecker" type="Area2D" unique_id=1887815767]
+visible = false
+script = ExtResource("1_jixxe")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
